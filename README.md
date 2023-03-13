@@ -4,7 +4,7 @@ The repo for DeepOCL.
 
 Currently OCLPairs is available, a setence-level aligned corpus for NL-OCL.
 
-## Index for OCLPairs
+## Source of OCLPairs
 
 The *src* column indicates the source of the sample.
 
