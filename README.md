@@ -1,10 +1,22 @@
 # DeepOCL
 
-The repo for DeepOCL.
+This repository contains code and corpus for the CAAI Transactions on Intelligence Technology 2023 paper [DeepOCL: A deep natural network for Object Constraint Language generation from unrestricted nature language](http://doi.org/10.1049/cit2.12207).
 
-Currently OCLPairs is available, a setence-level aligned corpus for NL-OCL.
+Currently OCLPairs is available, the setence-level aligned corpus for NL-OCL.
 
-## Source of OCLPairs
+If you use DeepOCL in your work, please cite it as follows:
+
+>@article{DeepOCL,
+>author = {Yang, Yilong and Liu, Yibo and Bao, Tianshu and Wang, Weiru and Niu, Nan and Yin, Yongfeng},
+>title = {DeepOCL: A deep neural network for Object Constraint Language generation from unrestricted nature language},
+>journal = {CAAI Transactions on Intelligence Technology},
+>volume = {n/a},
+>number = {n/a},
+>pages = {},
+>keywords = {deep learning, OCL, software engineering},
+>doi = {https://doi.org/10.1049/cit2.12207},
+
+## OCLPairs
 
 The *src* column indicates the source of the sample.
 
