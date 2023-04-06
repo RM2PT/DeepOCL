@@ -6,15 +6,12 @@ Currently OCLPairs is available, the setence-level aligned corpus for NL-OCL.
 
 If you use DeepOCL in your work, please cite it as follows:
 
->@article{DeepOCL,
->author = {Yang, Yilong and Liu, Yibo and Bao, Tianshu and Wang, Weiru and Niu, Nan and Yin, Yongfeng},
->title = {DeepOCL: A deep neural network for Object Constraint Language generation from unrestricted nature language},
->journal = {CAAI Transactions on Intelligence Technology},
->volume = {n/a},
->number = {n/a},
->pages = {},
->keywords = {deep learning, OCL, software engineering},
->doi = {https://doi.org/10.1049/cit2.12207},
+>@article{DeepOCL,  
+>author = {Yang, Yilong and Liu, Yibo and Bao, Tianshu and Wang, Weiru and Niu, Nan and Yin, Yongfeng},  
+>title = {DeepOCL: A deep neural network for Object Constraint Language generation from unrestricted nature language},  
+>journal = {CAAI Transactions on Intelligence Technology},  
+>keywords = {deep learning, OCL, software engineering},  
+>doi = {https://doi.org/10.1049/cit2.12207},  
 
 ## OCLPairs
 
