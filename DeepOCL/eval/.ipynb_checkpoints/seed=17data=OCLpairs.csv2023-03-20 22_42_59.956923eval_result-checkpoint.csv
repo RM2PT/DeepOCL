@@ -1,0 +1,547 @@
+,NL,OCL,Candidate,BLEU,Key_metric,Acc,Rouge-l
+0," bankcard is the object ban in the instance set of class BankCard. ban represents an object of class BankCard, and ban meets:
+      The attribute CardID of the object ban is equal to cardid","   bankcard:BankCard = BankCard.allInstance()->any(ban:BankCard | ban.CardID = cardid)
+","   bankcard:BankCard = BankCard.allInstance()->any(ban:BankCard | ban.CardID = cardid)
+",100.0,100.0,100,100.0
+1,"RemoveStructuralFeatureValueActions removing a value from ordered, non-unique StructuralFeatures must
+have a single removeAt InputPin and no value InputPin, if isRemoveDuplicates is false. The removeAt
+InputPin must be of type Unlimited Natural with multiplicity 1..1. Otherwise, the Action has a value InputPin
+and no removeAt InputPin.","if structuralFeature.isOrdered and not structuralFeature.isUnique and not
+isRemoveDuplicates then
+value = null and
+removeAt <> null and
+removeAt.type = UnlimitedNatural and
+removeAt.is(1,1)
+else
+removeAt = null and value <> null
+endif","if isOrdered then can remove all values
+else
+if isRemoveDuplicates then
+removeAt <> null
+else
+removeAt=null
+and removeAt.type = UnlimitedNatural.allInstances().base_DataType
+->any(type = UnlimitedNatural and multiplicity.between(1,1))
+else
+removeAt = null
+endif",32.044,44.549,0,63.415
+2,All containedNodes and containedEdges of an ActivityGroup must be in the same Activity as the group.,"containedNode->forAll(activity = self.containingActivity()) and
+containedEdge->forAll(activity = self.containingActivity())",containedNode->forAll(c | c.activity = activity),9.444,18.394,0,16.667
+3,All Ports are owned by an EncapsulatedClassifier.,owner = encapsulatedClassifier,ownedPort->forAll(p | p.owner.oclIsKindOf(EncapsulatedClassifier) and not p.owner.oclIsKindOf(UML::Classifier)),1.335,1.335,0,18.182
+4,"if the attribute points is greater than zero, there exists a Transaction with points greater than zero",points > 0 implies transactions->exists(t | t.points > 0),self.points()->notEmpty(),5.791,0.0,0,0.0
+5,"It must be possible for at least one instance of one optional child object (i.e., an object for which the occurrences lower
+bound is 0) and one instance of every mandatory child object (i.e., object constraints for which the occurrences lower
+bound is >= 1) to be included within the cardinality range.","self->select(s|s.namespace.stereotypedBy('ComplexObjectConstraint'))
+.subsettedProperty->union(self.redefinedProperty) ->select(r|r.upper>0) ->
+forAll(refProperty| self.namespace.oclAsType(Class).ownedAttribute->
+select(sibling|sibling.subsettedProperty->union(sibling.redefinedProperty)->
+includes(refProperty)).lower->sum()<=(refProperty.upper-1) )","self.cardinality >= 0 and
+self.mandatory->notEmpty() and
+let optionalConstraints: Set(ObjectConstraint) = self.cardinality.impliesUpperBounds(1) between optionalConstraints and optionalConstraints->forAll(aConstraint |
+aConstraint.oclIsKindOf(ObjectConstraint))",2.677,3.595,0,5.556
+6,"If allowSubstitutable is true, then there must be a constrainingClassifier.",allowSubstitutable implies constrainingClassifier->notEmpty(),(allowSubstitutable and constrainingClassifier->isEmpty()),14.259,0.0,0,0.0
+7,"The interaction operators 'consider' and 'ignore' can only be used for the ConsiderIgnoreFragment subtype of
+CombinedFragment.","((interactionOperator = InteractionOperatorKind::consider) or (interactionOperator =
+InteractionOperatorKind::ignore)) implies oclIsKindOf(ConsiderIgnoreFragment)","self.base_Fragment.kind=CombinedFragmentKind::consider |
+self.base_Fragment.kind=CombinedFragmentKind::ignore",10.132,0.0,0,0.0
+8,"The end attribute of the applied stereotype shall refer to a member end of the association block owning the
+property on which the stereotype is applied.",self.base_Property.association.memberEnd->includes(self.end),"self.base_Class.ownedAttribute
+->includes(self.base_Class.end) ->
+forAll(part | part.owner.oclIsKindOf(UML::Class))",19.092,30.311,0,25.0
+9,Every Generalization associated with a particular GeneralizationSet must have the same general Classifier.,generalization->collect(general)->asSet()->size() <= 1,generalization->forAll (general = general),4.837,0.0,0,0.0
+10," The value of temporary variable CurrentLoanRequests became rs
+  The return value was rs","   self.CurrentLoanRequests = rs and
+   result = rs
+","   self.CurrentLoanRequests = rs and
+   result = rs
+",100.0,100.0,100,100.0
+11," loans is the set of class Loan, including all loan in the instance set of class Loan. loan represents an object of class Loan, and loan meets:
+      The attribute IsReturned of the object loan is equal to false
+      The attribute DueDate of the object loan is before Today","   loans:Set(Loan) = Loan.allInstance()->select(loan:Loan | loan.IsReturned = false and loan.DueDate.isBefore(Today))
+","   loans:Set(Loan) = Loan.allInstance()->select(loan:Loan | loan.IsReturned = false and
+   loan.DueDate.isBefore(Today)
+",97.102,55.782,0,90.909
+12,"The example rule checks every transaction in the message and if one of the amounts is greater than 100, true will be returned. First a variable ""a"" is declared for the individual transaction. The condition statement is separated with a ""|""-sign. Then the statement is checked for every transaction in the message. If one of the amounts is greater than 100, true will be returned.", self.Transaction->exists(a|a.Amount > 100),self.transactions->forAll(t| t.amount > 100),15.397,0.0,0,54.545
+13," loanterm exists
+  The object loanterm is in the instance set of class LoanTerm","   loanterm.oclIsUndefined() = false and
+   LoanTerm.allInstance()->includes(loanterm)
+","   loanterm.oclIsUndefined() = false and
+   LoanTerm.allInstance()->includes(loanterm)
+",100.0,100.0,100,100.0
+14," The attribute Status of the object CurrentLoanRequest became APPROVED
+  The return value was true","   self.CurrentLoanRequest.Status = LoanRequestStatus::APPROVED and
+   result = true
+","   self.CurrentLoanRequest.Status = LoanRequestStatus::APPROVED and
+   result = true
+",100.0,100.0,100,100.0
+15, The authorname is not equal to null,"   authorname <> """"
+","   authorname <> null
+",46.308,63.008,0,66.667
+16,"If any of the parent Classifiers are a template, then the extendedSignature must include the signature of that Classifier.",classifier.allParents()->forAll(c | c.ownedTemplateSignature->notEmpty() implies self->closure(extendedSignature)->includes(c.ownedTemplateSignature)),self.parent.includes(template),0.538,4.002,0,0.0
+17,A binding of a PropertyTemplateParameter representing an attribute must be to an attribute.,(self.isAttribute() and (templateParameterSubstitution->notEmpty()) implies (templateParameterSubstitution->forAll(ts | ts.formal.oclIsKindOf(Property) and ts.formal.oclAsType(Property).isAttribute()))),binding->forAll(oclIsKindOf(Attribute) and self.base_PropertyParameter.binding.type.oclAsType(Attribute).oclAsType(Attribute).name <> null ),7.788,28.085,0,8.696
+18,The non-owned end of an Extension is typed by a Class.,metaclassEnd()->notEmpty() and metaclassEnd().type.oclIsKindOf(Class),not owner.oclIsKindOf(Class),11.072,14.543,0,25.0
+19,Generalization hierarchies must be directed and acyclical. A classifier cannot be both a transitively general and transitively specific classifier of the same classifier.,not self.allParents()->includes(self),"directed or acyclical.allParents()->forAll(i|i.isDirected and
+isDirected)",26.802,0.0,0,0.0
+20,An InstanceSpecification can act as a DeploymentTarget if it represents an instance of a Node and functions as a part in the internal structure of an encompassing Node.,deployment->notEmpty() implies classifier->exists(node | node.oclIsKindOf(Node) and Node.allInstances()->exists(n | n.part->exists(p | p.type = node))),"deployment->forAll(oclIsKindOf(Node) and
+deployment()->forAll(oclIsKindOf(Function))))",12.927,9.647,0,11.111
+21, The example rule check the length of the value of <Id> element and check that it is less than or equal to 20.,self.Id.size() <= 20,self.Id.length >= 20,32.019,32.019,0,60.0
+22," copy represented the object of class BookCopy
+  The object copy was created
+  The attribute Barcode of the object copy became barcode
+  The attribute Status of the object copy became AVAILABLE
+  The attribute Location of the object copy became location
+  The attribute IsReserved of the object copy became false
+  The object book was linked to the object copy by Copys
+  The object copy was linked to the object book by BookBelongs
+  The attribute CopyNum of the object book became the previous value of the attribute CopyNum of the object book plus 1
+  The object copy was put into the instance set of class BookCopy
+  The return value was true","   let copy:BookCopy in
+   copy.oclIsNew() and
+   copy.Barcode = barcode and
+   copy.Status = CopyStatus::AVAILABLE and
+   copy.Location = location and
+   copy.IsReserved = false and
+   book.Copys->includes(copy) and
+   copy.BookBelongs = book and
+   book.CopyNum = book.CopyNum@pre + 1 and
+   BookCopy.allInstance()->includes(copy) and
+   result = true
+","   let copy:BookCopy in
+   copy.oclIsNew() and
+   copy.Barcode = barcode and
+   copy.Status = CopyStatus::AVAILABLE and
+   copy.Location = location and
+   copy.IsReserved = false and
+   copy.Copys = book and
+   copy.BookBelongs = book and
+   book.Copys.pre - 1 and
+   BookCopy.allInstance()->includes(copy) and
+   BookCopy.allInstance()->includes(book) and
+   result = true
+",75.19,89.858,0,84.615
+23, The example rule compares the lowest amount from the first and second transaction amounts to the right side operand. It's assumed that there is at least two transactions. ,self.Transaction.at(0).Amount.min(self.Transaction.at(1).Amount) = 30,self.Transaction->select(x|x<>null)->size() >= 2,3.915,0.0,0,15.385
+24,"The NamedElements must be of a type of element that can be a signature for a message (i.e.., an Operation, or
+a Signal).",message->forAll(m | m.oclIsKindOf(Operation) or m.oclIsKindOf(Signal)),"(NamedElement)
+->forAll(i |
+self.base_Package.descriptor->forAll(m| m.oclIsKindOf(Type)) and
+(t.oclIsKindOf(Signature) or
+(t.oclAsType(Type).type =
+self.base_Package.descriptor->forAll(s|s.oclAsType(Type).type))), signature->forAll(oclIsKindOf(Signature)))",12.326,31.351,0,25.0
+25,The owned attributes and owned ends of an AssociationClass are disjoint.,ownedAttribute->intersection(ownedEnd)->isEmpty(),owned.attributes->excludesAll(owned.attributes),4.997,0.0,0,0.0
+26,The supplier shall be an element stereotyped by a subtype of AbstractRequirement,"AbstractRequirement.allInstances().base_NamedElement
+->includesAll(self.base_Abstraction.client)",AbstractRequirement.allInstances().base_Package.supplier->forAll(c | c.subtypeOf(AbstractRequirement) ),33.666,33.499,0,28.571
+27,A Region can have at most one shallow history Vertex.,"subvertex->select(oclIsKindOf(Pseudostate))->collect(oclAsType(Pseudostate))->
+select(kind = PseudostateKind::shallowHistory)->size() <= 1",self.isShallowHistory,0.0,0.0,0,0.0
+28,A Stereotype may only generalize or specialize another Stereotype.,"allParents()->forAll(oclIsKindOf(Stereotype))
+and Classifier.allInstances()->forAll(c | c.allParents()->exists(oclIsKindOf(Stereotype))
+implies c.oclIsKindOf(Stereotype))",generalization->forAll (specialize | generalization->includesAll(genotype) and specialize.lower = true),2.721,0.0,0,22.222
+29," The return value was the set of class Book, including all book in the instance set of class Book. book represented an object of class Book, and book meet:
+      At least one c existed in all objects which book was linked to by Copys. c represented an object of class BookCopy, and c meet:
+          The attribute Barcode of the object c was equal to barcode","   result = Book.allInstance()->select(book:Book | book.Copys->exists(c:BookCopy | c.Barcode = barcode))
+","   result=Book.allInstance()->select(book:Book | book.Copys->exists(c:BookCopy | c.Barcode = barcode))
+",100.0,100.0,100,84.211
+30,The metaclass association is derived from the getMetaClasses operation.,self.metaClass = self.getMetaClasses(),metaclass.ownedAttribute->collect(metas->includes(self)),4.369,4.369,0,0.0
+31,Class inheritance should not be used for OperationalTransformations.,self.superClass->isEmpty(),self.isOperational,0.0,0.0,0,50.0
+32,The parents of a Classifier must be non-final.,parents()->forAll(not isFinalSpecialization),parent->notEmpty(),8.698,0.0,0,0.0
+33," sls is the Set of class SalesLineItem, including  which currentSale is linked to
+  sub is the Set of Real, including the Subamount of each object in the set sls","   sls:Set(SalesLineItem) = currentSale.ContainedSalesLine,
+   sub:Set(Real) = sls->collect(s:SalesLineItem | s.Subamount)
+","   sls:Set(SalesLineItem) = currentSale.allWishlines()->select(o|o.linkingLineItem = self)
+",30.129,0.0,0,40.0
+34," The attribute Price of the object item became newPrice
+  The return value was true","   item.Price = newPrice and
+   result = true
+","   item.Price = newPrice and
+   result = true
+",100.0,100.0,100,100.0
+35,A ConditionalNode has no InputPins.,input->isEmpty(),(input->isEmpty()),61.479,76.577,0,0.0
+36,The unmarshallType must have at least one StructuralFeature.,unmarshallType.allAttributes()->size() >= 1,unmarshallType.allStructuralFeatures()->any(feat | not feature.oclIsKindOf(StructuralFeature)),16.196,16.196,0,20.0
+37,A ForkNode has one incoming ActivityEdge.,incoming->size()=1,incoming->size() = 1,100.0,100.0,100,0.0
+38,All ownedLiterals must be stereotyped by PermissibleValue,"self.base_Enumeration.ownedLiteral->forAll(x:EnumerationLiteral|
+x.stereotypedBy('PermissibleValue')","referencedLiteral->forAll(ot l | oclIsKindOf(PermissibleValue) and oclIsStereotyped(""PermissibleValue""))",8.502,22.789,0,0.0
+39,The aggregation of an ExtensionEnd is composite.,self.aggregation = AggregationKind::composite,extensionEnd.aggregation = ExtensionEndAggregationKind::composite,34.572,34.572,0,50.0
+40,"If this is a Property with a bounded upper limit, then the minimum number of possible children must be less than or
+equal to the upper value of the constrained Property.","self->select(s|s.namespace.stereotypedBy('ComplexObjectConstraint'))
+.subsettedProperty->union(self.redefinedProperty) ->select(r|r.upper>0) ->
+forAll(refProperty| self.namespace.oclAsType(Class).ownedAttribute->
+select(sibling|sibling.subsettedProperty->union(sibling.redefinedProperty)->
+includes(refProperty)) ->select(p|p.lower>0) ->size()<refProperty.upper )",self.upperLimits->exists(p | p.upperLimit->asSequence() <> 0),0.603,0.0,0,7.143
+41," bookcopy exists
+  The object bookcopy is in the instance set of class BookCopy","   bookcopy.oclIsUndefined() = false and
+   BookCopy.allInstance()->includes(bookcopy)
+","   bookcopy.oclIsUndefined() = false and
+   BookCopy.allInstance()->includes(bookcopy)
+",100.0,100.0,100,100.0
+42,A QuantityKind cannot be defined in terms of itself. This follows from the quantity calculus used for expressing a derived QuantityKind in terms of base QuantityKinds chosen for a SystemOfQuantities by means of non- contradictory equations,"dependsOnQuantityKinds()->excludes(self)
+",baseQuantity.symbol->asSet() = self.symbol->asSet(),6.917,0.0,0,0.0
+43,Transitions outgoing Pseudostates may not have a Trigger.,"source.oclIsKindOf(Pseudostate) and (source.oclAsType(Pseudostate).kind <>
+PseudostateKind::initial) implies trigger->isEmpty()",self.outgoing->isEmpty(),1.876,8.047,0,0.0
+44," The value of temporary variable CurrentLoanRequests became rs
+  The return value was rs","   self.CurrentLoanRequests = rs and
+   result = rs
+","   Object.allInstance()->includes(self.CurrentLoanRequests) and
+   result = rs
+",20.706,20.706,0,61.538
+45, The Clock of a startInstant InstantValue is also a on Clock of this TimedExecution.,on -> includesAll(startInstant.onClock),on.oclIsKindOf(Clock) implies on.onClock = self,8.517,0.0,0,20.0
+46, The return value was item,"   result = item
+","   result = item
+",0.0,100.0,100,100.0
+47,"if ModuleDef is defined in a Container, this Container must be another ModuleDef ",definedIn.notEmpty implies (defined In.oclIsKindOf (ModuleDef) and definedIn <> self),self.base_PackageDef.metadata.definedIn.oclIsKindOf(ModuleDef),23.758,18.757,0,13.333
+48," user exists
+  rb doesn't exist","   user.oclIsUndefined() = false and
+   rb.oclIsUndefined() = true
+","   user.oclIsUndefined() = false and
+   rb.oclIsUndefined() = true
+",100.0,100.0,100,100.0
+49,The type of the value InputPin must conform to the type of the variable.,value <> null implies value.type.conformsTo(variable.type),variable.type.conformsTo(value.type),40.069,0.0,0,36.364
+50,All packaged elements must be Archetypes.,self.base_Package.packagedElement->forAll(p|p.stereotypedBy('Archetype')),allPackagedElements()->forAll(self.base_PackagedElement->asSequence()->includes(self.base_ArchiveElement)),14.725,49.15,0,0.0
+51,Abstract InterfaceDefs may only derive from other abstract InterfaceDefs,isAbstract implies base->forAll (isAbstract),"this.abstractClass->union(self.base_InterfaceDefs)->asSet()->union(self.derivedInterfaceDefs())->
+forAll(def : AbstractInterfaceDef | def.oclIsKindOf(AbstractInterfaceDef) and def.type.oclAsType(AbstractInterfaceDef) = def.oclAsType(AbstractInterfaceDef) )",2.504,0.0,0,0.0
+52, cashdesk exists,"   cashdesk.oclIsUndefined() = false
+","   cashdesk.oclIsUndefined() = false
+",100.0,100.0,100,100.0
+53," loanterm is the object loa in the instance set of class LoanTerm. loa represents an object of class LoanTerm, and loa meets:
+      The attribute ItemID of the object loa is equal to termid","   loanterm:LoanTerm = LoanTerm.allInstance()->any(loa:LoanTerm | loa.ItemID = termid)
+","   loanterm:LoanTerm = LoanTerm.allInstance()->any(loa:LoanTerm | loa.ItemID = termid)
+",100.0,100.0,100,100.0
+54,All of the ownedLiterals must be stereotyped by IdEntry,self.base_Enumeration.ownedLiteral->forAll(ol|ol.stereotypedBy('IdEntry')) ,self.ownedLiterals->forAll(oclIsKindOf(IdEntry))),10.69,26.145,0,33.333
+55,"If the InstanceSpecification is not a Link, none of its classifiers are associations","not self.oclIsKindOf(Link) implies classifier->forAll(c |
+ c.oclIsKindOf(Class))",not self.link.oclIsKindOf(Link) implies classifier->isEmpty(),39.857,51.378,0,57.143
+56,"The returnValueRecipient must be a Property of a ConnectableElement that is represented by a Lifeline
+covered by this InteractionUse.","returnValueRecipient->asSet()->notEmpty() implies
+let covCE : Set(ConnectableElement) = covered.represents->asSet() in
+covCE->notEmpty() and let classes:Set(Classifier) =
+covCE.type.oclIsKindOf(Classifier).oclAsType(Classifier)->asSet() in
+let allProps : Set(Property) = classes.attribute->union(classes.allParents().attribute)-
+>asSet() in
+allProps->includes(returnValueRecipient)","returnValueRecipient <> null implies
+returnValueRecipient.oclIsKindOf(Property)",0.015,2.089,0,6.897
+57," The attribute Barcode of the object bookcopy became barcode
+  The attribute Status of the object bookcopy became status
+  The attribute Location of the object bookcopy became location
+  The attribute IsReserved of the object bookcopy became isreserved
+  The return value was true","   bookcopy.Barcode = barcode and
+   bookcopy.Status = status and
+   bookcopy.Location = location and
+   bookcopy.IsReserved = isreserved and
+   result = true
+","   bookcopy.Barcode = barcode and
+   bookcopy.Status = status and
+   bookcopy.Location = location and
+   bookcopy.IsReserved = isreserved and
+   result = true
+",100.0,100.0,100,100.0
+58," user exists
+  loans exists","   user.oclIsUndefined() = false and
+   loans.oclIsUndefined() = false
+","   user.oclIsUndefined() = false and
+   loans.oclIsUndefined() = false
+",100.0,100.0,100,100.0
+59," The attribute IsReserved of the object copy became false
+  The attribute IsReserveClosed of the object res became true
+  The return value was true","   copy.IsReserved = false and
+   res.IsReserveClosed = true and
+   result = true
+","   copy.IsReserved = false and
+   copy.IsReserveClosed = true and
+   res.IsReserveClosed = true and
+   result = true
+",64.719,64.719,0,100.0
+60,"The selector value, if present, must be a LiteralString or a LiteralInteger.","self.selector->notEmpty() implies
+self.selector.oclIsKindOf(LiteralInteger) or
+self.selector.oclIsKindOf(LiteralString)","selector.oclIsObjectType() and (selector.oclAsType(LiteralString) or
+selector.oclIsTypeOf(LiteralInteger) ) is not NULL",13.886,0.0,0,22.222
+61," The attribute OrderStatus of the object op became RECEIVED
+  For each object of class OrderEntry in all objects which op was linked to by ContainedEntries, oe represented it(the object) and the following operations were performed:
+      The attribute StockNumber of the object oe was equal to the previous value of the attribute StockNumber of the object oe plus the attribute Quantity of the object oe
+  The return value was true","   op.OrderStatus = OrderStatus::RECEIVED and
+   op.ContainedEntries->forAll(oe:OrderEntry |
+    oe.Item.StockNumber = oe.Item.StockNumber@pre + oe.Quantity)
+   and
+   result = true
+","   op.OrderStatus = OrderStatus::RECEIVED and
+   op.ContainedEntries->forAll(oe:OrderEntry |
+    oe.StockNumber = oe.PreviousStockNumber+oe.Quantity) or
+    result = true
+",69.025,80.058,0,82.759
+62,"This Classifier must have exactly one generalization, and that is a «Constraint» Generalization.","self.base_NamedElement.oclIsKindOf(Classifier) implies
+(self.base_NamedElement.oclAsType(Classifier).generalization->
+forAll(x|x.stereotypedBy('Constrains')) and
+(self.base_NamedElement.oclAsType(Classifier).generalization->size() = 1))",self.generalization->select(s | s.general = self).general->size()=1,6.484,0.0,0,19.048
+63," The attribute CreditScore of the object CurrentLoanRequest became 100
+  The attribute Status of the object CurrentLoanRequest became SUBMITTED
+  The return value was the attribute CreditScore of the object CurrentLoanRequest","
+   self.CurrentLoanRequest.CreditScore = 100 and
+   self.CurrentLoanRequest.Status = LoanRequestStatus::SUBMITTED and
+   result = self.CurrentLoanRequest.CreditScore
+","   CurrentLoanRequest.CreditScore = 100 and
+   CurrentLoanRequest.Status = LorstRequestStatus::SUBMITTED and
+   CurrentLoanRequest.Status = LorstRequestStatus::SUBMITTED and
+   result = CurrentLoanRequest.CreditScore
+",44.867,44.867,0,82.353
+64,a ValueDef must be defined within a ModuleDef,definedIn.oclIsKindOf (ModuleDef),"definedIn.oclAsType(ModuleDef)->asSet()->forAll(m|d.codegen->
+allInstances()->includes(self))",5.614,0.0,0,28.571
+65," r is the object lr in the instance set of class LoanRequest. lr represents an object of class LoanRequest, and lr meets:
+      The attribute RequestID of the object lr is equal to id","   r:LoanRequest = LoanRequest.allInstance()->any(lr:LoanRequest | lr.RequestID = id)
+","   r:LoanRequest = LoanRequest.allInstance()->any(lr:LoanRequest | lr.RequestID = id)
+",100.0,100.0,100,100.0
+66,The multiplicity of the result OutputPin is 0..*.,"result.is(0,*)","result.is(0,*.*)",68.659,70.531,0,40.0
+67," user exists
+  res exists","   user.oclIsUndefined() = false and
+   res.oclIsUndefined() = false
+","   user.oclIsUndefined() = false and
+   res.oclIsUndefined() = false
+",100.0,100.0,100,100.0
+68,All coincident junction instants in a coincidence relation are owned by distinct time bases.,"coincidentJIs->forAll( i,j | i<>j implies i.tb <> j.tb )",not coincidence.dependentJunctionInstants()->isEmpty(),1.95,0.0,0,0.0
+69,the number of valid cards for every customer must be equal to the number of programs in which the customer participates. ,"programs->size() = cards->select( valid = true )->size()
+",self.cards()->size() = self.program->size(),45.057,0.0,0,20.0
+70,The multiplicity of the result OutputPin must be 1..1.,"result<>null implies result.is(1,1)","result.is(1,1)",43.46,0.0,0,66.667
+71,A FinalState cannot reference a submachine.,submachine->isEmpty(),self.submachine.oclIsUndefined(),13.135,0.0,0,0.0
+72,"The [AOM] ARCHETYPE_HRIN/concept_id must have a value. [AOM] ARCHETYPE_HRIN/concept_id maps to
+the name of the «Archetype» Package. ",not(self.base_Package.name.oclIsUndefined()) and (self.base_Package.name<>''),self.base_Package.general->includes(self.base_Package.allArchetypes()),42.559,36.162,0,18.182
+73, librarian exists,"   librarian.oclIsUndefined() = false
+","   librarian.oclIsUndefined() = false
+",100.0,100.0,100,100.0
+74, The return value was supplier,"   result = supplier
+","   result = supplier
+",0.0,100.0,100,100.0
+75,"The property ""ownedAttribute"" shall be empty",self.base_Class.ownedAttribute->isEmpty(),self.ownedAttribute->isEmpty(),49.702,65.588,0,80.0
+76,The participantPackages should be either TerminologyPackage or TerminologyPackageInterface,self.participantPackage->forall(pp|pp.oclIsKindOf(Terminology::TerminologyPac kage)),self.participantPackage->forAll(participantPackage->includes(participantPackage)),15.577,47.647,0,33.333
+77," user is the object u in the instance set of class User. u represents an object of class User, and u meets:
+      The attribute UserID of the object u is equal to uid
+  copy is the object bc in the instance set of class BookCopy. bc represents an object of class BookCopy, and bc meets:
+      The attribute Barcode of the object bc is equal to barcode
+  res is the object r in the instance set of class Reserve. r represents an object of class Reserve, and r meets:
+      The object r is linked to the object copy by ReservedCopy
+      The object r is linked to the object user by ReservedUser","   user:User = User.allInstance()->any(u:User | u.UserID = uid),
+   copy:BookCopy = BookCopy.allInstance()->any(bc:BookCopy | bc.Barcode = barcode),
+   res:Reserve = Reserve.allInstance()->any(r:Reserve | r.ReservedCopy = copy and r.ReservedUser = user)
+","   user:User = User.allInstance()->any(u:User | u.UserID = uid),
+   copy:BookCopy = BookCopy.allInstance()->any(bc:BookCopy | bc.Barcode = barcode),
+   res:Reserve = Reserve.allInstance()->any(r:Reserve | r.ReservedCopy = copy and r.ReservedUser = user),
+   endif",97.419,99.024,0,93.617
+78," The object supplier was deleted from the instance set of class Supplier
+  The return value was true","   Supplier.allInstance()->excludes(supplier) and
+   result = true
+","   Supplier.allInstance()->excludes(supplier) and
+   result = true
+",100.0,100.0,100,100.0
+79," librarian is the object lib in the instance set of class Librarian. lib represents an object of class Librarian, and lib meets:
+      The attribute LibrarianID of the object lib is equal to librarianid","   librarian:Librarian = Librarian.allInstance()->any(lib:Librarian | lib.LibrarianID = librarianid)
+","   librarian:Librarian = Librarian.allInstance()->any(lib:Librarian | lib.LibrarianID = librarianid)
+",100.0,100.0,100,100.0
+80,"A «CORBAIndexedType»-stereotyped Class participates in exactly one
+Association that has a navigable opposite AssociationEnd",self.navigableOppositeEnds->size = 1,self.navigableOppositeEnds->forAll(end | end.isNavigableOppositeEnd()),17.778,17.778,0,22.222
+81,All ActivityEdges outgoing from loopVariable OutputPins must have targets within the LoopNode.,allOwnedNodes()->includesAll(loopVariable.outgoing.target),loopVariable->forAll(outgoing->notEmpty() and outgoing->forAll(edge | not (edge.source->isEmpty() and outgoing->forAll(target | target.oclIsKindOf(UML::Vertex)))),2.354,0.0,0,0.0
+82," The object store was deleted from the instance set of class Store
+  The return value was true","   Store.allInstance()->excludes(store) and
+   result = true
+","   Store.allInstance()->excludes(store) and
+   result = true
+",100.0,100.0,100,100.0
+83, user doesn't exist,"   user.oclIsUndefined() = true
+","   user.oclIsUndefined() = true
+",100.0,100.0,100,100.0
+84,The type of the value InputPin conforms to the type of the Association end.,value<>null implies value.type.conformsTo(end.type),value.type.conformsTo(/end/)?,34.491,0.0,0,44.444
+85,The behavior may only have non-stream in or return parameters.,behavior <> null implies behavior.ownedParameter->forAll(not isStream and (direction=ParameterDirectionKind::in or direction=ParameterDirectionKind::return)),(behavior.oclIsKindOf(ParameterBehavior)) implies (behavior.forAllInstances()->includes(self)),4.159,11.099,0,14.286
+86," All of the quantityKinds that are measurementUnits of Units in the SystemOfUnits shall be defined in the 
+systemOfQuantities of that SystemOfUnits.","getEffectiveSystemOfQuantities() = null or let aqk : Set(QuantityKind) = 
+getEffectiveSystemOfQuantities().allQuantityKinds() in ->allUnits()
+->forAll(u | aqk
+->includesAll(getKindOfQuantitiesForMeasurementUnit(u)))","self.base_SystemOfUnit.measurementUnits->forAll(kind=UML::MeasurementKind::measurementUnit and
+(namespace.oclIsKindOf(UML::SystemOfUnit::MeasurementUnit::MeasurementUnit)) and
+self.base_SystemOfUnit.systemOfQuantities->includes(kind) )",4.648,11.571,0,0.0
+87,All Transitions of a ProtocolStateMachine must be ProtocolTransitions.,region->forAll(r | r.transition->forAll(t | t.oclIsTypeOf(ProtocolTransition))),allTransitions()->include(self),1.682,0.0,0,0.0
+88,endType is derived from the types of the member ends.,self.endType = self.memberEnd->collect(e | e.type),type->union(endType),2.168,0.0,0,0.0
+89, The return value was productcatalog,"   result = productcatalog
+","   result = productcatalog
+",0.0,100.0,100,100.0
+90,"The type of the port at the last position of the onNestedPort list must own or inherit the port of the stereotyped
+trigger.","self.onNestedPort->last().type.oclAsType(UML::Classifier).allFeatures()
+->includes(self.base_Trigger.port)",self.onNestedPort->last().type->excludesAll(self.base_Trigger.type.ownedPort),39.248,0.0,0,57.143
+91," bookcopy is the object boo in the instance set of class BookCopy. boo represents an object of class BookCopy, and boo meets:
+      The attribute Barcode of the object boo is equal to barcode","   bookcopy:BookCopy = BookCopy.allInstance()->any(boo:BookCopy | boo.Barcode = barcode)
+","   bookcopy:BookCopy = BookCopy.allInstance()->any(boo:BookCopy | boo.Barcode = barcode)
+",100.0,100.0,100,100.0
+92,The source and target Vertices of a Transition must be contained in the same StateMachine as the Transition,"let stateMachine = self.containingStateMachine() in
+source.containingStateMachine() = stateMachine and
+target.containingStateMachine() = stateMachine","source<>null and target<>null and
+(transition.source.location.parent->
+includes(transition.target) and
+transition.target.location.parent->
+includes(transition.source.location))",3.511,0.0,0,28.571
+93,A «CORBAComponent» can only inherit from a «CORBAComponent» or a «CORBAInterface»:,"self.generalization->forAll (g : Generalization | g.parent.isStereotyped (""CORBAComponent"") or g.parent.isStereotyped(""CORBAInterface""))","self.connection->exists(participant.isStereotyped(""CORBAComponent"") or participater.isStereotyped(""CORBAInterface"")",40.118,63.339,0,22.222
+94,A TimedEvent is bound to one Clock.,on->size( ) = 1,self.boundClock->select(oclIsKindOf(Clock)))->size() = 1,24.942,24.942,0,50.0
+95,"A «CORBAConstants»-stereotyped Class must be directly contained by a
+«CORBAModule»-stereotyped package.","self.namespace.isStereotyped(""CORBAModule"")","self.base_Class = self.base_Class.oclAsType(Class);
+self.base_Class.containingModule->excludesAll(self)",3.236,3.236,0,25.0
+96,"The connection point references used as destinations/sources of Transitions associated with a submachine State
+must be defined as entry/exit points in the submachine StateMachine.","self.isSubmachineState implies (self.connection->forAll (cp |
+cp.entry->forAll (ps | ps.stateMachine = self.submachine) and
+cp.exit->forAll (ps | ps.stateMachine = self.submachine)))",self.allDestinations->forAll(s|s.connectionPoint->includes(s.connectionPoint)),2.754,0.0,0,9.524
+97," The attribute Id of the object store became id
+  The attribute Name of the object store became name
+  The attribute Address of the object store became address
+  The attribute IsOpened of the object store became isopened
+  The return value was true","   store.Id = id and
+   store.Name = name and
+   store.Address = address and
+   store.IsOpened = isopened and
+   result = true
+","   store.Id = id and
+   store.Name = name and
+   store.Address = address and
+   store.IsOpened = isopened and
+   result = true
+",100.0,100.0,100,100.0
+98,The denominator of a rational number shall not be zero.,denominator <> 0,1.0 / rational.denominator->notEmpty(),4.768,0.0,0,25.0
+99," The set of all Units in a given SystemOfUnits shall be capable of being partitioned into two disjoint, covering subsets: 
+the set of base Units (typically chosen to be mutually independent) and all its complement, the set of derived Units, each of which can be expressed in terms of the base Units",allUnits()->includesAll(allBaseUnits()),"self.baseUnits.size() = self.baseUnit->size() and
+self.baseUnit->isDisjoint(self.baseUnit)",4.699,0.0,0,0.0
+100,This Property must redefine or subset a Reference Model Property.,"self.base_NamedElement.oclIsKindOf(Property) implies
+self.base_NamedElement.oclAsType(Property)->forAll(p|p.redefinedProperty->
+notEmpty() or p.subsettedProperty->notEmpty()) ",self.base_Property.redefined->isEmpty(),1.684,4.89,0,15.385
+101,"If this Archetype root is a redefinition of another external node, then that external node must have as an ancestor the
+Archetype definition which is the parent of this Archetype.","self.base_Classifier.general->forAll(g|g.stereotypedBy('ArchetypeRoot'))
+implies self.base_Classifier.general.general ->
+forAll(g|g.namespace=self.base_Classifier.namespace.oclAsType(Package).
+packageImport.importedPackage->select(p|p.stereotypedBy('Archetype'))->
+asSequence()->first())","redefinition->notEmpty() implies
+self.base_Class.oclAsType(Classifier).allParents()->forAll(d | not d.oclIsKindOf (Classifier) and
+d.definition->asSet()->includes(d))",15.013,26.813,0,14.286
+102,A UseCase must have a name.,name -> notEmpty (),name <> null,11.522,11.522,0,28.571
+103,The multiplicity of the target IinputPin is 1..1.,"target.is(1,1)","target.is(1,1)",100.0,100.0,100,100.0
+104,"The example rule checks every transaction amount in the message and if the amount 30 is not found, true will be returned.",self.Transaction.Amount->excludes(30),self.Transaction.Amount.allInstances()->first()->size() = 30,13.52,0.0,0,44.444
+105,The Property must be an Association memberEnd.,end.association <> null,memberEnd->notEmpty() implies (memberEnd.type = #member),3.377,0.0,0,0.0
+106,It’s an association stereotyped «CORBAUses»:,"self.isStereotyped(""CORBAUses”)"," self.base_Issue.association_
+->includes(self.base_Association.participant.directChild)",4.108,4.108,0,22.222
+107,Full ports shall not be behavioral (isBehavior=false).,not self.base_Port.isBehavior,(self.isBehavior==false),14.536,14.536,0,0.0
+108," productcatalog is the object pro in the instance set of class ProductCatalog. pro represents an object of class ProductCatalog, and pro meets:
+      The attribute Id of the object pro is equal to id","   productcatalog:ProductCatalog = ProductCatalog.allInstance()->any(pro:ProductCatalog | pro.Id = id)
+","   productcatalog:ProductCatalog = ProductCatalog.allInstance()->any(pro:ProductCatalog | pro.Id = id)
+",100.0,100.0,100,100.0
+109, The example rule mandates the usage of both Creditor and Debtor name when Amount exceeds 200,"self.Amount > 200 implies
+
+self.Debtor.Name->size() = 1 and self.Creditor.Name->size() = 1", self.Creditor.Amount > 200,3.432,0.0,0,62.5
+110,All owned attributes are attribute constraints. Each must subset or redefine a reference model property. ,self.namespace.stereotypedBy('ComplexObjectConstraint') implies ((self.subsettedProperty->notEmpty()) or( self.redefinedProperty->notEmpty())),self.base_Relationship.member.ownedAttribute->forAll(oclIsKindOf(AttributeConstraint)),3.688,0.0,0,16.667
+111," The object bankcard was deleted from the instance set of class BankCard
+  The return value was true","   BankCard.allInstance()->excludes(bankcard) and
+   result = true
+","   bankcard.oclIsUndefined() = false and
+   BankCard.allInstance()->excludes(bankcard) and
+   result = true
+",62.659,75.543,0,80.0
+112,The lower bound must be a non-negative integer literal.,lowerBound()->notEmpty() implies lowerBound() >= 0,lowerBound() >= 0,22.313,0.0,0,75.0
+113," item exists
+  The object item is in the instance set of class Item","   item.oclIsUndefined() = false and
+   Item.allInstance()->includes(item)
+","   item.oclIsUndefined() = false and
+   Item.allInstance()->includes(item)
+",100.0,100.0,100,100.0
+114,"The decider Pin must be on an Action in the test section of the Clause and must be of type Boolean with
+multiplicity 1..1.","test.oclAsType(Action).allActions().output->includes(decider) and
+decider.type = Boolean and
+decider.is(1,1) ","let action : Action = self.base_Clause.onActions->any(act|act.oclIsKindOf(Action)) in
+let feature : Boolean =
+((action.oclAsType(Action).feature->forAll(feature|feature.type.conformsTo(feature.type))) in
+feature.type.conformsTo(feature.type))",9.011,17.331,0,27.586
+115," loan exists
+  The attribute Status of the object loan is equal to LSOPEN","   loan.oclIsUndefined() = false and
+   loan.Status = LoanStatus::LSOPEN
+","   loan.oclIsUndefined() = false and
+   loan.Status = LoanStatus::LSOPEN
+",100.0,100.0,100,100.0
+116,"Messages cannot cross boundaries of CombinedFragments or their operands. This is true if and only if both
+MessageEnds are enclosed within the same InteractionFragment (i.e., an InteractionOperand or an Interaction).","sendEvent->notEmpty() and receiveEvent->notEmpty() implies
+let sendEnclosingFrag : Set(InteractionFragment) =
+sendEvent->asOrderedSet()->first().enclosingFragment()
+in
+let receiveEnclosingFrag : Set(InteractionFragment) =
+receiveEvent->asOrderedSet()->first().enclosingFragment()
+in sendEnclosingFrag = receiveEnclosingFrag","self.target <> null implies self.fragment->forAll(r | (r.oclIsKindOf(CombinedFragment) and
+(r.operand->size()=1 and
+r.oclAsType(InteractionOperand).size() = 1))",3.307,8.508,0,20.0
+117,Every collaborationRole in the Collaboration is bound within the CollaborationUse.,type.collaborationRole->forAll(role | roleBinding->exists(rb | rb.supplier->includes(role))),collaboration.role->forAll(r | self. collaborationRole->forAll(r | r.role.oclIsTypeOf(Pseudostate) and r.role.oclAsType(Pseudostate).role).parent = self),11.855,17.926,0,10.0
+118, The return value was true,"   result = true
+","   result = true
+",0.0,100.0,100,100.0
+119,The exit Pseudostates must be Pseudostates with kind exitPoint.,exit->forAll(kind = PseudostateKind::exitPoint),exitPoint->forAll(kind = PseudostateKind::exitPoint),89.315,93.445,0,66.667
+120,Only binary Associations can be aggregations.,memberEnd->exists(aggregation <> AggregationKind::none) implies (memberEnd->size() = 2 and memberEnd->exists(aggregation = AggregationKind::none)),parent.isBinary,0.0,0.0,0,0.0
+121,the first element of this ordered set must be named Silver as follows,levels->first().name = 'Silver',"self.base_Package.name = ""Silver""",13.951,0.0,0,44.444
+122," supplier is the object sup in the instance set of class Supplier. sup represents an object of class Supplier, and sup meets:
+      The attribute Id of the object sup is equal to id","   supplier:Supplier = Supplier.allInstance()->any(sup:Supplier | sup.Id = id)
+","   supplier:Supplier = Supplier.allInstance()->any(sup:Supplier | sup.Id = id)
+",100.0,100.0,100,100.0
+123," u represented the object of class Student
+  The object u was created
+  The attribute UserID of the object u became userID
+  The attribute Name of the object u became name
+  The attribute Email of the object u became email
+  The attribute Password of the object u became password
+  The attribute Sex of the object u became sex
+  The attribute Faculty of the object u became faculty
+  The attribute LoanedNumber of the object u became 0
+  The attribute BorrowStatus of the object u became NORMAL
+  The attribute SuspensionDays of the object u became 0
+  The attribute OverDueFee of the object u became 0
+  The attribute Major of the object u became major
+  The attribute Programme of the object u became programme
+  The attribute RegistrationStatus of the object u became registrationStatus
+  The object u was put into the instance set of class User
+  The object u was put into the instance set of class Student
+  The return value was true","   let u:Student in
+   u.oclIsNew() and
+   u.UserID = userID and
+   u.Name = name and
+   u.Email = email and
+   u.Password = password and
+   u.Sex = sex and
+   u.Faculty = faculty and
+   u.LoanedNumber = 0 and
+   u.BorrowStatus = BorrowStatus::NORMAL and
+   u.SuspensionDays = 0 and
+   u.OverDueFee = 0 and
+   u.Major = major and
+   u.Programme = programme and
+   u.RegistrationStatus = registrationStatus and
+   User.allInstance()->includes(u) and
+   Student.allInstance()->includes(u) and
+   result = true
+","   let u:Student in
+   u.oclIsNew() and
+   u.UserID = userID and
+   u.Name = name and
+   u.Email = email and
+   u.Password = password and
+   u.Sex = sex and
+   u.Faculty = faculty and
+   u.LoanedNumber = 0 and
+   u.BorrowStatus = BorrowStatus::NORMAL and
+   u.OverDueFee = 0 and
+   u.Major = major and
+   u.Programme = programme and
+   u.RegistrationStatus = registrationStatus and
+   User.allInstance()->includes(u) and
+   Student.allInstance()->includes(u) and
+   result = true
+",94.829,98.029,0,98.592
+124,"ControlFlows may not have ObjectNodes at either end, except for ObjectNodes with control type.","(source.oclIsKindOf(ObjectNode) implies source.oclAsType(ObjectNode).isControlType) and
+(target.oclIsKindOf(ObjectNode) implies target.oclAsType(ObjectNode).isControlType)",end->notEmpty() and (end->isEmpty() implies end->isEmpty()),4.855,15.614,0,28.571
+125,"All navigable opposite AssociationEnds of a «CORBAValue»-stereotyped Class
+must have visibility “public” or “private.”","self.navigableOppositeEnds->forAll(end | end.visibility = #public or
+end.visibility = #private)",self.navigableOppositeEnds->forAll(end | end.visibility = #public or end.visibility = #private),100.0,100.0,100,100.0
+126,No pair of classes exists such that they are both equivalent and disjoint,"not Class.allInstances()->exists(c | self.isEquivalentTo(c) and
+ self.isDisjointWith(c) or self.hasDisjointAncestorsWith(c)))",self.equivalent.disjoint(self.disjoint),1.238,0.0,0,14.286
+127,AcceptEventActions may have no input pins.,input->size() = 0,input->isEmpty(),20.253,20.253,0,0.0
+128,"The type, ordering, and multiplicity of an argument InputPin must be the same as the corresponding attribute
+of the signal.","let attribute: OrderedSet(Property) = signal.allAttributes() in
+Sequence{1..argument->size()}->forAll(i |
+argument->at(i).type.conformsTo(attribute->at(i).type) and
+argument->at(i).isOrdered = attribute->at(i).isOrdered and argument->at(i).compatibleWith(attribute->at(i)))",argument<>null implies signal->at(argument.index) = attribute.type,0.223,1.692,0,16.0
+129,The visibility of at least one end must allow access from the context Classifier of the WriteLinkAction.,"endData.end->exists(end |
+end.type=_'context' or
+end.visibility=VisibilityKind::public or
+end.visibility=VisibilityKind::protected and
+endData.end->exists(other |
+other<>end and _'context'.conformsTo(other.type.oclAsType(Classifier))))",self.context = null,0.0,0.339,0,0.0
+130,A DurationConstraint has either one or two constrainedElements,constrainedElement->size() = 1 or constrainedElement->size()=2,constrainedElement->size() = 1,31.891,0.0,0,75.0
